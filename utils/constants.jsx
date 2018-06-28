@@ -761,6 +761,7 @@ export const Constants = {
     GM_CHANNEL: 'G',
     OPEN_CHANNEL: 'O',
     PRIVATE_CHANNEL: 'P',
+    ARCHIVED_CHANNEL: 'archive',
     INVITE_TEAM: 'I',
     OPEN_TEAM: 'O',
     MAX_POST_LEN: 4000,
