@@ -352,7 +352,7 @@ export default {
                             label_default: 'Available Languages:',
                             help_text: 'admin.general.localization.availableLocalesDescription',
                             help_text_html: true,
-                            help_text_default: 'Set which languages are available for users in Account Settings (leave this field blank to have all supported languages available). If you\'re manually adding new languages, the <strong>Default Client Language</strong> must be added before saving this setting.<br /><br />Would like to help with translations? Join the <a href="http://translate.mattermost.com/" target="_blank">Mattermost Translation Server</a> to contribute.',
+                            help_text_default: 'Set which languages are available for users in Account Settings (leave this field blank to have all supported languages available). If you\'re manually adding new languages, the <strong>Default Client Language</strong> must be added before saving this setting.<br /><br />Would you like to help with translations? Join the <a href="http://translate.mattermost.com/" target="_blank">Mattermost Translation Server</a> to contribute.',
                             multiple: true,
                             no_result: 'admin.general.localization.availableLocalesNoResults',
                             no_result_default: 'No results found',
@@ -396,9 +396,18 @@ export default {
                         {
                             type: Constants.SettingsTypes.TYPE_BANNER,
                             label: 'admin.compliance.noLicense',
+                            label_html: true,
                             label_default: '<h4 class="banner__heading">Note:</h4><p>Compliance is an enterprise feature. Your current license does not support Compliance. Click <a href="http://mattermost.com"target="_blank">here</a> for information and pricing on enterprise licenses.</p>',
                             isHidden: needsUtils.hasLicense,
                             banner_type: 'warning',
+                        },
+                        {
+                            type: Constants.SettingsTypes.TYPE_BANNER,
+                            label: 'admin.compliance.newComplianceExportBanner',
+                            label_html: true,
+                            label_default: 'This feature is replaced by a new <a href="../../admin_console/compliance/message_export">Compliance Export</a> feature, and will be removed in a future release. We recommend migrating to the new system.',
+                            isHidden: needsUtils.not(needsUtils.hasLicense),
+                            banner_type: 'info',
                         },
                         {
                             type: Constants.SettingsTypes.TYPE_BOOL,
@@ -628,7 +637,7 @@ export default {
                             ),
                         },
                         {
-                            type: Constants.SettingsTypes.TYPE_TEXT,
+                            type: Constants.SettingsTypes.TYPE_NUMBER,
                             key: 'LdapSettings.LdapPort',
                             label: 'admin.ldap.portTitle',
                             label_default: 'AD/LDAP Port:',

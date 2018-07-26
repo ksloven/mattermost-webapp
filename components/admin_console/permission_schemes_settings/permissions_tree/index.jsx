@@ -2,18 +2,17 @@
 // See LICENSE.txt for license information.
 
 import {connect} from 'react-redux';
+
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 
-import Root from './root.jsx';
+import PermissionsTree from './permissions_tree.jsx';
 
 function mapStateToProps(state) {
     const config = getConfig(state);
 
     return {
-        diagnosticsEnabled: config.DiagnosticsEnabled === 'true',
-        noAccounts: config.NoAccounts === 'true',
-        diagnosticId: config.DiagnosticId,
+        config,
     };
 }
 
-export default connect(mapStateToProps)(Root);
+export default connect(mapStateToProps)(PermissionsTree);

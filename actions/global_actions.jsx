@@ -62,6 +62,7 @@ export function emitChannelClickEvent(channel) {
     function switchToChannel(chan) {
         const getMyChannelMemberPromise = getMyChannelMember(chan.id)(dispatch, getState);
         const oldChannelId = ChannelStore.getCurrentId();
+        const teamId = chan.team_id || getCurrentTeamId(getState());
 
         getMyChannelMemberPromise.then(() => {
             getChannelStats(chan.id)(dispatch, getState);
@@ -71,14 +72,14 @@ export function emitChannelClickEvent(channel) {
             reloadIfServerVersionChanged();
         });
 
-        BrowserStore.setGlobalItem(Constants.PREV_CHANNEL_KEY + chan.team_id, chan.name);
+        BrowserStore.setGlobalItem(Constants.PREV_CHANNEL_KEY + teamId, chan.name);
 
         loadProfilesForSidebar();
 
         AppDispatcher.handleViewAction({
             type: ActionTypes.CLICK_CHANNEL,
             id: chan.id,
-            team_id: chan.team_id,
+            team_id: teamId,
         });
     }
 
@@ -128,7 +129,7 @@ export async function emitPostFocusEvent(postId, returnTo = '') {
     const {data} = await dispatch(getPostThread(postId));
 
     if (!data) {
-        browserHistory.push(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
+        browserHistory.replace(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
         return;
     }
 
@@ -139,14 +140,14 @@ export async function emitPostFocusEvent(postId, returnTo = '') {
     if (!channel) {
         const {data: channelData} = await dispatch(getChannel(channelId));
         if (!channelData) {
-            browserHistory.push(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
+            browserHistory.replace(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
             return;
         }
         channel = channelData;
     }
 
     if (channel.team_id && channel.team_id !== teamId) {
-        browserHistory.push(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
+        browserHistory.replace(`/error?type=${ErrorPageTypes.PERMALINK_NOT_FOUND}&returnTo=${returnTo}`);
         return;
     }
 
